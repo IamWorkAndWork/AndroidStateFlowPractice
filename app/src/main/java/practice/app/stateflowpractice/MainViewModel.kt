@@ -7,7 +7,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class MainViewModel : ViewModel() {
 
@@ -25,7 +24,7 @@ class MainViewModel : ViewModel() {
 
             if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
 
-                _loginUiState.value = LoginUiState.InvalidUser("Username or Password should not be null")
+                _loginUiState.value = LoginUiState.InvalidInput("Username or Password should not be null")
 
             } else {
 
@@ -56,7 +55,7 @@ sealed class LoginUiState {
     data class Error(val error: Throwable) : LoginUiState()
     object Loading : LoginUiState()
     object Empty : LoginUiState()
-    data class InvalidUser(val message: String) : LoginUiState()
+    data class InvalidInput(val message: String) : LoginUiState()
 
 }
 

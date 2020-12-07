@@ -2,7 +2,6 @@ package practice.app.stateflowpractice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
@@ -37,10 +36,19 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        viewModel.onLoginUiState().asLiveData().observe(this@MainActivity, { state: LoginUiState ->
-            //alternative
-            renderOnLoginUiState(state)
-        })
+//        //###################
+//        //alternative use asLiveData()
+//        //###################
+//        viewModel.onLoginUiState()
+//            .filter {
+//                it is LoginUiState.Success
+//            }
+//            .map {
+//                it
+//            }
+//            .asLiveData().observe(this@MainActivity, { state: LoginUiState ->
+//            renderOnLoginUiState(state)
+//        })
 
         lifecycleScope.launchWhenStarted {
 
@@ -61,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 binding.mainProgressBar.isVisible = true
 
             }
-            is LoginUiState.InvalidUser -> {
+            is LoginUiState.InvalidInput -> {
 
                 Snackbar.make(
                         binding.root,

@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
 
             viewModel.onLoginUiState()
-                    .collect { state: LoginUiState ->
-                        renderOnLoginUiState(state)
-                    }
+                .collect { state: LoginUiState ->
+                    renderOnLoginUiState(state)
+                }
 
         }
 
@@ -66,41 +66,48 @@ class MainActivity : AppCompatActivity() {
         when (state) {
             is LoginUiState.Loading -> {
 
+                binding.mainStateTextView.text = "State : Loading"
                 binding.mainProgressBar.isVisible = true
 
             }
             is LoginUiState.InvalidInput -> {
 
+                binding.mainStateTextView.text = "State : InvalidInput"
                 Snackbar.make(
-                        binding.root,
-                        state.message,
-                        Snackbar.LENGTH_LONG
+                    binding.root,
+                    state.message,
+                    Snackbar.LENGTH_LONG
                 ).show()
                 binding.mainProgressBar.isVisible = false
 
             }
             is LoginUiState.Error -> {
 
+                binding.mainStateTextView.text = "State : Error"
                 val message = state.error.localizedMessage
                 Snackbar.make(
-                        binding.root,
-                        message,
-                        Snackbar.LENGTH_LONG
+                    binding.root,
+                    message,
+                    Snackbar.LENGTH_LONG
                 ).show()
                 binding.mainProgressBar.isVisible = false
 
             }
             is LoginUiState.Success -> {
 
+                binding.mainStateTextView.text = "State : Success"
                 Snackbar.make(
-                        binding.root,
-                        "Successfully logged in",
-                        Snackbar.LENGTH_LONG
+                    binding.root,
+                    "Successfully logged in",
+                    Snackbar.LENGTH_LONG
                 ).show()
                 binding.mainProgressBar.isVisible = false
 
             }
-            else -> Unit
+            else -> {
+                binding.mainStateTextView.text = "State : Empty"
+                Unit
+            }
         }
 
     }
